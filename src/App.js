@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import RecipeList from "./RecipeList/RecipeList";
+import { withStyles } from "@material-ui/core/styles";
 
 class LambdaDemo extends Component {
     constructor(props) {
@@ -32,20 +32,28 @@ class LambdaDemo extends Component {
     }
 }
 
+const styles = {
+    app: {
+        backgroundColor: "#e6e6e6"
+    },
+    siteContent: {
+        backgroundColor: "white",
+        maxWidth: "1270px",
+        margin: "0 auto"
+    }
+};
+
 class App extends Component {
     render() {
+        const { classes } = this.props;
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <LambdaDemo />
-                </header>
+            <div className={classes.app}>
+                <div className={classes.siteContent}>
+                    <RecipeList />
+                </div>
             </div>
         );
     }
 }
 
-export default App;
+export default withStyles(styles)(App);
