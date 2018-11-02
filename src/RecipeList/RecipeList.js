@@ -56,12 +56,7 @@ class RecipeList extends Component {
         ];
         return (
             <div className={classes.grid}>
-                <GridList
-                    className={classes.grid}
-                    cellHeight="auto"
-                    cols={4}
-                    alignContent={"center"}
-                >
+                <GridList className={classes.grid} cellHeight="auto" cols={4}>
                     {recipes.map((recipe, index) => (
                         <RecipeListItem key={index} {...recipe} />
                     ))}

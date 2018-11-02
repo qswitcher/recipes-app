@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList/RecipeList";
+import RecipesAppBar from "./RecipesAppBar/RecipesAppBar";
+
 import { withStyles } from "@material-ui/core/styles";
 
 class LambdaDemo extends Component {
@@ -49,6 +51,7 @@ class App extends Component {
         return (
             <div className={classes.app}>
                 <div className={classes.siteContent}>
+                    <RecipesAppBar />
                     <RecipeList />
                 </div>
             </div>
