@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const styles = {
@@ -23,8 +24,22 @@ const styles = {
 
 class RecipesAppBar extends Component {
     state = {
-        anchorEl: null
+        anchorEl: null,
+        user: null
     };
+
+    componentDidMount() {
+        window.netlifyIdentity.on("init", user => this.setState({ user }));
+        window.netlifyIdentity.on("login", user => this.setState({ user }));
+        window.netlifyIdentity.on("logout", user =>
+            this.setState({ user: null })
+        );
+        const user = window.netlifyIdentity.currentUser();
+        if (user) {
+            console.log(user);
+            this.setState({ user });
+        }
+    }
 
     handleMenu = event => {
         this.setState({ anchorEl: event.currentTarget });
@@ -38,11 +53,16 @@ class RecipesAppBar extends Component {
         console.log("add recipe");
     };
 
+    handleLogin = () => {
+        window.netlifyIdentity.open();
+    };
+
     render() {
         const { classes } = this.props;
-        const { anchorEl } = this.state;
+        const { anchorEl, user } = this.state;
         const open = Boolean(anchorEl);
 
+        console.log(user);
         return (
             <AppBar position="static">
                 <Toolbar>
@@ -61,35 +81,41 @@ class RecipesAppBar extends Component {
                         Tasty Recipes
                     </Typography>
 
-                    {/* <Button color="inherit">Login</Button> */}
-                    <div>
-                        <IconButton
-                            aria-owns={open ? "menu-appbar" : undefined}
-                            aria-haspopup="true"
-                            onClick={this.handleMenu}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right"
-                            }}
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right"
-                            }}
-                            open={open}
-                            onClose={this.handleClose}
-                        >
-                            <MenuItem onClick={this.handleAddRecipe}>
-                                Add Recipe
-                            </MenuItem>
-                        </Menu>
-                    </div>
+                    {!user && (
+                        <Button color="inherit" onClick={this.handleLogin}>
+                            Login
+                        </Button>
+                    )}
+                    {user && (
+                        <div>
+                            <IconButton
+                                aria-owns={open ? "menu-appbar" : undefined}
+                                aria-haspopup="true"
+                                onClick={this.handleMenu}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right"
+                                }}
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right"
+                                }}
+                                open={open}
+                                onClose={this.handleClose}
+                            >
+                                <MenuItem onClick={this.handleAddRecipe}>
+                                    Add Recipe
+                                </MenuItem>
+                            </Menu>
+                        </div>
+                    )}
                 </Toolbar>
             </AppBar>
         );
