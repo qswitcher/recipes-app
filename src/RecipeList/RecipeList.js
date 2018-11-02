@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import GridList from "@material-ui/core/GridList";
 import RecipeListItem from "../RecipeListItem/RecipeListItem";
 import { withStyles } from "@material-ui/core/styles";
-import loremIpsum from "lorem-ipsum";
 
 const styles = {
     grid: {
@@ -13,47 +12,23 @@ const styles = {
 };
 
 class RecipeList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { loading: true, recipes: [] };
+    }
+
+    componentDidMount() {
+        this.setState({ loading: true });
+        fetch("/.netlify/functions/recipes")
+            .then(response => response.json())
+            .then(json =>
+                this.setState({ loading: false, recipes: json.recipes })
+            );
+    }
+
     render() {
         const { classes } = this.props;
-        const wordCount = 20;
-        const recipes = [
-            {
-                title: "Title 1",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 2",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 3",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 4",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 5",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 6",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 7",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 8",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            },
-            {
-                title: "Title 9",
-                description: loremIpsum({ count: wordCount, units: "words" })
-            }
-        ];
+        const { recipes } = this.state;
         return (
             <div className={classes.grid}>
                 <GridList className={classes.grid} cellHeight="auto" cols={4}>
