@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import UserIcon from "../UserIcon/UserIcon";
 
 const styles = {
     root: {
@@ -36,7 +36,6 @@ class RecipesAppBar extends Component {
         );
         const user = window.netlifyIdentity.currentUser();
         if (user) {
-            console.log(user);
             this.setState({ user });
         }
     }
@@ -94,7 +93,10 @@ class RecipesAppBar extends Component {
                                 onClick={this.handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <UserIcon
+                                    email={user.email}
+                                    fullname={user.user_metadata.full_name}
+                                />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
