@@ -30,7 +30,10 @@ class RecipesAppBar extends Component {
 
     componentDidMount() {
         window.netlifyIdentity.on("init", user => this.setState({ user }));
-        window.netlifyIdentity.on("login", user => this.setState({ user }));
+        window.netlifyIdentity.on("login", user => {
+            this.setState({ user });
+            window.netlifyIdentity.close();
+        });
         window.netlifyIdentity.on("logout", user =>
             this.setState({ user: null })
         );
@@ -41,6 +44,9 @@ class RecipesAppBar extends Component {
     }
 
     handleMenu = event => {
+        console.log("event");
+        console.log(event.currentTarget);
+        console.log(event.target);
         this.setState({ anchorEl: event.currentTarget });
     };
 
@@ -50,10 +56,16 @@ class RecipesAppBar extends Component {
 
     handleAddRecipe = () => {
         console.log("add recipe");
+        this.handleClose();
     };
 
     handleLogin = () => {
         window.netlifyIdentity.open();
+    };
+
+    handleLogout = () => {
+        window.netlifyIdentity.logout();
+        this.handleClose();
     };
 
     render() {
@@ -61,7 +73,8 @@ class RecipesAppBar extends Component {
         const { anchorEl, user } = this.state;
         const open = Boolean(anchorEl);
 
-        console.log(user);
+        console.log("anchorEL");
+        console.log(anchorEl);
         return (
             <AppBar position="static">
                 <Toolbar>
@@ -114,6 +127,9 @@ class RecipesAppBar extends Component {
                             >
                                 <MenuItem onClick={this.handleAddRecipe}>
                                     Add Recipe
+                                </MenuItem>
+                                <MenuItem onClick={this.handleLogout}>
+                                    Logout
                                 </MenuItem>
                             </Menu>
                         </div>
