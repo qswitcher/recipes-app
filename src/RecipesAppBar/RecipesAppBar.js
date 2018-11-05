@@ -8,13 +8,15 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
 import UserIcon from "../UserIcon/UserIcon";
+import { withRouter } from "react-router-dom";
 
 const styles = {
     root: {
         flexGrow: 1
     },
     grow: {
-        flexGrow: 1
+        flexGrow: 1,
+        cursor: "pointer"
     },
     menuButton: {
         marginLeft: -12,
@@ -55,8 +57,8 @@ class RecipesAppBar extends Component {
     };
 
     handleAddRecipe = () => {
-        console.log("add recipe");
         this.handleClose();
+        this.props.history.push("/new-recipe");
     };
 
     handleLogin = () => {
@@ -68,27 +70,23 @@ class RecipesAppBar extends Component {
         this.handleClose();
     };
 
+    handleHome = () => {
+        this.props.history.push("/");
+    };
+
     render() {
         const { classes } = this.props;
         const { anchorEl, user } = this.state;
         const open = Boolean(anchorEl);
 
-        console.log("anchorEL");
-        console.log(anchorEl);
         return (
             <AppBar position="static">
                 <Toolbar>
-                    {/* <IconButton
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Menu"
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
                     <Typography
                         variant="h6"
                         color="inherit"
                         className={classes.grow}
+                        onClick={this.handleHome}
                     >
                         Tasty Recipes
                     </Typography>
@@ -140,4 +138,4 @@ class RecipesAppBar extends Component {
     }
 }
 
-export default withStyles(styles)(RecipesAppBar);
+export default withRouter(withStyles(styles)(RecipesAppBar));
