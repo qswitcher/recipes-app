@@ -78,7 +78,7 @@ class RecipesAppBar extends Component {
         const { classes } = this.props;
         const { anchorEl, user } = this.state;
         const open = Boolean(anchorEl);
-
+        console.log(user);
         return (
             <AppBar position="static">
                 <Toolbar>
