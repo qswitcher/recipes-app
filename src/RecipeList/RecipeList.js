@@ -19,7 +19,9 @@ class RecipeList extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        fetch("/.netlify/functions/recipes")
+        fetch(
+            "/.netlify/functions/recipes?userId=d605bf2e-932d-4bbc-a177-d3517dede42c"
+        )
             .then(response => response.json())
             .then(json =>
                 this.setState({ loading: false, recipes: json.recipes })
