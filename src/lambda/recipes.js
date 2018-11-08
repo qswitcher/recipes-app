@@ -1,4 +1,3 @@
-import loremIpsum from "lorem-ipsum";
 import * as dynamoDbLib from "./utils/dynamodb";
 import { success, failure } from "./utils/response";
 

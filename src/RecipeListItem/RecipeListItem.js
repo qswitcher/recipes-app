@@ -19,12 +19,12 @@ const styles = {
 
 class RecipeListItem extends Component {
     render() {
-        const { classes, title, description } = this.props;
+        const { classes, title, photo, description } = this.props;
         return (
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.media}
-                    image="http://placekitten.com/g/300/300"
+                    image={photo}
                     title={title}
                 />
                 <CardContent>
