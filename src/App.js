@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList/RecipeList";
 import RecipesAppBar from "./RecipesAppBar/RecipesAppBar";
-import NewRecipe from "./NewRecipe/NewRecipe";
+import EditRecipe from "./EditRecipe/EditRecipe";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -33,7 +33,7 @@ class App extends Component {
                         <RecipesAppBar />
                         <div className={classes.siteContent}>
                             <Route exact path="/" component={RecipeList} />
-                            <Route path="/new-recipe" component={NewRecipe} />
+                            <Route path="/edit-recipe" component={EditRecipe} />
                         </div>
                     </div>
                 </Router>

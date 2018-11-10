@@ -2,26 +2,23 @@ import uuid from "uuid";
 import * as dynamoDbLib from "./utils/dynamodb";
 import { success, failure } from "./utils/response";
 
-export async function main(event, context) {
-    console.log("foo");
+export async function handler(event) {
     try {
         const data = JSON.parse(event.body);
+        const item = {
+            recipeId: uuid.v1(),
+            createdAt: Date.now()
+        };
+
+        Object.entries(data).forEach((pair) => {
+            if (pair[1] !== '' && pair[1] !== null && pair[1] !== undefined) {
+                item[pair[0]] = pair[1];
+            }
+        });
+
         const params = {
             TableName: "recipes",
-            Item: {
-                userId: event.requestContext.identity.cognitoIdentityId,
-                recipeId: uuid.v1(),
-                // prepTime: data.prepTime,
-                // cookTime: data.cookTime,
-                // readyIn: data.readyIn,
-                // servings: data.servings,
-                title: data.title,
-                description: data.description,
-                // directions: data.directions,
-                photo: data.photo,
-                // siteUrl: data.siteUrl,
-                createdAt: Date.now()
-            }
+            Item: item
         };
 
         await dynamoDbLib.call("put", params);

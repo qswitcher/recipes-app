@@ -58,7 +58,7 @@ class RecipesAppBar extends Component {
 
     handleAddRecipe = () => {
         this.handleClose();
-        this.props.history.push("/new-recipe");
+        this.props.history.push("/edit-recipe");
     };
 
     handleLogin = () => {

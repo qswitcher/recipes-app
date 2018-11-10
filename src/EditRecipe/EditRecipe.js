@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -14,23 +13,48 @@ const styles = theme => ({
     // }
 });
 
-class NewRecipe extends React.Component {
+class EditRecipe extends React.Component {
     state = {
-        prepTime: null,
-        cookTime: null,
-        readyIn: null,
-        servings: null,
-        yield: null,
-        title: null,
-        description: null,
-        ingredients: null,
-        directions: null
+        prepTime: '',
+        cookTime: '',
+        readyIn: '',
+        servings: '',
+        recipeYield: '',
+        title: '',
+        description: '',
+        ingredients: '',
+        directions: ''
     };
 
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value
         });
+    };
+
+    handleSubmit = event => {
+        fetch(
+            "/.netlify/functions/createRecipe",
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: 'd605bf2e-932d-4bbc-a177-d3517dede42c',
+                    ...this.state
+                })
+            }
+        )
+            .then(response => {
+                console.log(response);
+                if (response.status > 200) {
+                    alert('Something bad happened');
+                } else {
+                    window.location = '/'
+                }
+            }).catch((e) => {
+                alert('Something bad happened');
+                console.log(e);
+            });
+        event.preventDefault();
     };
 
     render() {
@@ -53,6 +77,7 @@ class NewRecipe extends React.Component {
                                         onChange={this.handleChange("title")}
                                         className={classes.rightColumnTextField}
                                         fullWidth
+                                        required
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -67,6 +92,7 @@ class NewRecipe extends React.Component {
                                             "description"
                                         )}
                                         fullWidth
+                                        required
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -81,6 +107,7 @@ class NewRecipe extends React.Component {
                                             "ingredients"
                                         )}
                                         fullWidth
+                                        required
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -95,6 +122,7 @@ class NewRecipe extends React.Component {
                                             "directions"
                                         )}
                                         fullWidth
+                                        required
                                     />
                                 </Grid>
                             </Grid>
@@ -124,7 +152,7 @@ class NewRecipe extends React.Component {
                                 <Grid item xs={12} lg={6}>
                                     <TextField
                                         id="readyIn"
-                                        label="Ready in (Optional)"
+                                        label="Ready in"
                                         value={this.state.readyIn}
                                         onChange={this.handleChange("readyIn")}
                                         className={classes.textField}
@@ -143,10 +171,10 @@ class NewRecipe extends React.Component {
                                 </Grid>
                                 <Grid item xs={12} lg={6}>
                                     <TextField
-                                        id="yield"
-                                        label="Recipe yield (Optional)"
-                                        value={this.state.yield}
-                                        onChange={this.handleChange("yield")}
+                                        id="recipeYield"
+                                        label="Recipe yield"
+                                        value={this.state.recipeYield}
+                                        onChange={this.handleChange("recipeYield")}
                                         className={classes.textField}
                                         fullWidth
                                     />
@@ -162,8 +190,9 @@ class NewRecipe extends React.Component {
                                         color="secondary"
                                         size="large"
                                         fullWidth
+                                        onClick={this.handleSubmit}
                                     >
-                                        Create
+                                        Save
                                     </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={3} md={2}>
@@ -185,4 +214,4 @@ class NewRecipe extends React.Component {
     }
 }
 
-export default withStyles(styles)(NewRecipe);
+export default withStyles(styles)(EditRecipe);
