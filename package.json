@@ -5,9 +5,16 @@
     "dependencies": {
         "@material-ui/core": "^3.3.2",
         "@material-ui/icons": "^3.0.1",
+        "apollo-boost": "^0.1.20",
+        "apollo-client": "^2.4.5",
+        "apollo-server-lambda": "^2.2.0",
+        "aws-amplify": "^1.1.10",
+        "graphql": "^14.0.2",
+        "graphql-tag": "^2.10.0",
         "gravatar-url": "^2.0.0",
         "lorem-ipsum": "^1.0.6",
         "react": "^16.6.0",
+        "react-apollo": "^2.2.4",
         "react-dom": "^16.6.0",
         "react-router-dom": "^4.3.1",
         "react-scripts": "2.1.0"
@@ -15,10 +22,10 @@
     "scripts": {
         "start": "run-p start:**",
         "start:app": "react-scripts start",
-        "start:lambda": "netlify-lambda serve src/lambda",
+        "start:lambda": "netlify-lambda -c ./config/webpack.functions.js serve src/lambda",
         "build": "run-p build:**",
         "build:app": "react-scripts build",
-        "build:lambda": "netlify-lambda build src/lambda",
+        "build:lambda": "netlify-lambda -c ./config/webpack.functions.js build src/lambda",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
