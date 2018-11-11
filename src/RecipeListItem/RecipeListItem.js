@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router-dom";
 
 const styles = {
     media: {
@@ -18,10 +19,15 @@ const styles = {
 };
 
 class RecipeListItem extends Component {
+    handleRecipeClick = () => {
+        const { history, recipeId } = this.props;
+        history.push(`/recipes/${recipeId}`);
+    };
+
     render() {
         const { classes, title, photo, description } = this.props;
         return (
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={this.handleRecipeClick}>
                 <CardMedia
                     className={classes.media}
                     image={photo}
@@ -38,4 +44,4 @@ class RecipeListItem extends Component {
     }
 }
 
-export default withStyles(styles)(RecipeListItem);
+export default withRouter(withStyles(styles)(RecipeListItem));

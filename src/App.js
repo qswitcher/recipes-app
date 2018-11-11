@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RecipeList from "./RecipeList/RecipeList";
+import Recipe from "./Recipe/Recipe";
 import RecipesAppBar from "./RecipesAppBar/RecipesAppBar";
 import EditRecipe from "./EditRecipe/EditRecipe";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -33,6 +34,7 @@ class App extends Component {
                         <RecipesAppBar />
                         <div className={classes.siteContent}>
                             <Route exact path="/" component={RecipeList} />
+                            <Route path="/recipes/:id" component={Recipe} />
                             <Route path="/edit-recipe" component={EditRecipe} />
                         </div>
                     </div>
