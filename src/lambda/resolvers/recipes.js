@@ -1,8 +1,8 @@
-import * as dynamoDbLib from "./utils/dynamodb";
-import { success, failure } from "./utils/response";
+import * as dynamoDbLib from "../utils/dynamodb";
+import { success, failure } from "../utils/response";
 
-export async function handler(event, context) {
-    const queryParams = event.queryStringParameters;
+export async function resolver() {
+    const userId = "d605bf2e-932d-4bbc-a177-d3517dede42c";
 
     const params = {
         TableName: "recipes",
@@ -14,14 +14,16 @@ export async function handler(event, context) {
         //   of the authenticated user
         KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
-            ":userId": queryParams.userId
+            ":userId": userId
         }
     };
 
     try {
         const result = await dynamoDbLib.call("query", params);
         // Return the matching list of items in response body
-        return success({ recipes: result.Items });
+        return success(
+            result.Items.map(item => ({ ...item, id: item.recipeId }))
+        );
     } catch (e) {
         console.log(e);
         return failure({ status: false });
