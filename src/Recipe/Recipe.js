@@ -1,27 +1,32 @@
 import React from "react";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+
+const getRecipe = gql`
+    query GetRecipe($id: String!) {
+        getRecipe(id: $id) {
+            id
+            photo
+            title
+            description
+        }
+    }
+`;
 
 class Recipe extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { loading: true, recipe: null };
-    }
-
-    componentDidMount() {
-        const { id } = this.props.match.params;
-        this.setState({ loading: true });
-        fetch(
-            `/.netlify/functions/getRecipe?recipeId=${id}&userId=d605bf2e-932d-4bbc-a177-d3517dede42c`
-        )
-            .then(response => response.json())
-            .then(json => this.setState({ loading: false, recipe: json }));
-    }
-
     render() {
-        console.log(this.props);
-        if (!this.state.loading) {
-            return <p>{this.state.recipe.title}</p>;
-        }
-        return null;
+        const { id } = this.props.match.params;
+        return (
+            <Query query={getRecipe} variables={{ id }}>
+                {({ loading, error, data }) => {
+                    if (loading) {
+                        return null;
+                    }
+                    const recipe = data.getRecipe;
+                    return <p>{recipe.title}</p>;
+                }}
+            </Query>
+        );
     }
 }
 

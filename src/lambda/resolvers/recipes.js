@@ -1,5 +1,4 @@
 import * as dynamoDbLib from "../utils/dynamodb";
-import { success, failure } from "../utils/response";
 
 export async function resolver() {
     const userId = "d605bf2e-932d-4bbc-a177-d3517dede42c";
@@ -18,14 +17,9 @@ export async function resolver() {
         }
     };
 
-    try {
-        const result = await dynamoDbLib.call("query", params);
-        // Return the matching list of items in response body
-        return success(
-            result.Items.map(item => ({ ...item, id: item.recipeId }))
-        );
-    } catch (e) {
-        console.log(e);
-        return failure({ status: false });
-    }
+    console.log("hi");
+    const result = await dynamoDbLib.call("query", params);
+    console.log(result.Items);
+    // Return the matching list of items in response body
+    return result.Items.map(item => ({ ...item, id: item.recipeId }));
 }

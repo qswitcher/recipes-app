@@ -20,8 +20,8 @@ const styles = {
 
 class RecipeListItem extends Component {
     handleRecipeClick = () => {
-        const { history, recipeId } = this.props;
-        history.push(`/recipes/${recipeId}`);
+        const { history, id } = this.props;
+        history.push(`/recipes/${id}`);
     };
 
     render() {

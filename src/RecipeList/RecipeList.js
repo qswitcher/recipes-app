@@ -5,13 +5,21 @@ import { withStyles } from "@material-ui/core/styles";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
+// query RecipeList {
+//     getRecipes {
+//         id
+//         title
+//         description
+//         photo
+//     }
+// }
 const getRecipes = gql`
-    {
+    query GetRecipes {
         recipes {
             id
+            photo
             title
             description
-            photo
         }
     }
 `;
@@ -25,32 +33,14 @@ const styles = {
 };
 
 class RecipeList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { loading: true, recipes: [] };
-    }
-
-    // componentDidMount() {
-    //     this.setState({ loading: true });
-    //     fetch(
-    //         "/.netlify/functions/recipes?userId=d605bf2e-932d-4bbc-a177-d3517dede42c"
-    //     )
-    //         .then(response => response.json())
-    //         .then(json =>
-    //             this.setState({ loading: false, recipes: json.recipes })
-    //         );
-    // }
-
     render() {
         const { classes } = this.props;
-        // const { recipes } = this.state;
         return (
             <Query query={getRecipes}>
                 {({ loading, error, data }) => {
                     if (loading) {
                         return null;
                     }
-                    console.log(data);
                     const { recipes } = data;
                     return (
                         <div className={classes.grid}>

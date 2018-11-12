@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
-const { recipesResolver } = require("./resolvers/recipes");
+const { resolver: recipesResolver } = require("./resolvers/recipes");
+const { resolver: getRecipeResolver } = require("./resolvers/getRecipe");
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
@@ -8,23 +9,26 @@ const typeDefs = gql`
         cookTime: String
         readyIn: String
         recipeYield: String
-        recipeId: String
+        id: String
         userId: String
         description: String
         title: String
         ingredients: String
         directions: String
+        photo: String
     }
 
     type Query {
         recipes: [Recipe]
+        getRecipe(id: String!): Recipe
     }
 `;
 
 // Provide resolver functions for your schema fields
 const resolvers = {
     Query: {
-        recipes: recipesResolver
+        recipes: recipesResolver,
+        getRecipe: getRecipeResolver
     }
 };
 
