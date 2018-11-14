@@ -2,6 +2,10 @@ import uuid from "uuid";
 import * as dynamoDbLib from "./utils/dynamodb";
 import { success, failure } from "./utils/response";
 
+/**
+ * Handler for creating a recipe
+ * @param {*} event 
+ */
 export async function handler(event) {
     try {
         const data = JSON.parse(event.body);

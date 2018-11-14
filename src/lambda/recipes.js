@@ -1,6 +1,10 @@
 import * as dynamoDbLib from "./utils/dynamodb";
 import { success, failure } from "./utils/response";
-
+/**
+ * Handler for getting recipes
+ * @param {*} event 
+ * @param {*} context 
+ */
 export async function handler(event, context) {
     const queryParams = event.queryStringParameters;
 
