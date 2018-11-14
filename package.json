@@ -8,6 +8,7 @@
         "apollo-boost": "^0.1.20",
         "apollo-client": "^2.4.5",
         "apollo-server-lambda": "^2.2.0",
+        "aws-amplify": "^1.1.10",
         "graphql": "^14.0.2",
         "graphql-tag": "^2.10.0",
         "gravatar-url": "^2.0.0",
