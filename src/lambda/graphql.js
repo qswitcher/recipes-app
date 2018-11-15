@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
-const { resolver: recipesResolver } = require("./resolvers/recipes");
-const { resolver: getRecipeResolver } = require("./resolvers/getRecipe");
+const { resolver: recipesResolver } = require("../resolvers/recipes");
+const { resolver: getRecipeResolver } = require("../resolvers/getRecipe");
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
